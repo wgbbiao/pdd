@@ -5,6 +5,7 @@ type MethodType string
 const (
 	// 多多客
 	DDK_ThemeListGet              MethodType = "pdd.ddk.theme.list.get"
+	DDK_ThemeGoodsSearch          MethodType = "pdd.ddk.theme.goods.search"
 	DDK_RPPromUrlGenerate         MethodType = "pdd.ddk.rp.prom.url.generate" // 生成红包推广链接
 	DDK_OrderListIncrementGet     MethodType = "pdd.ddk.order.list.increment.get"
 	DDK_ColorOrderIncrementGet    MethodType = "pdd.ddk.color.order.increment.get"

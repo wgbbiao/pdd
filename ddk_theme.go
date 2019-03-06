@@ -30,3 +30,21 @@ func (d *DDK) ThemeListGet(page, pageSize int) (res *ThemeListResponse, err erro
 	err = json.Unmarshal(bytes, res)
 	return
 }
+
+type ThemeGoodsResponse struct {
+	Total     int      `json:"total"`
+	GoodsList []*Goods `json:"goods_list"`
+}
+
+func (d *DDK) ThemeGoodsSearch(theme_id int) (res *ThemeGoodsResponse, err error) {
+	params := NewParamsWithType(DDK_ThemeGoodsSearch)
+	params.Set("theme_id", theme_id)
+	r, err := Call(d.Context, params)
+	if err != nil {
+		return
+	}
+	bytes, err := GetResponseBytes(r, "theme_list_get_response")
+	res = new(ThemeGoodsResponse)
+	err = json.Unmarshal(bytes, res)
+	return
+}
