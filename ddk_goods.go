@@ -3,6 +3,7 @@ package pdd
 import (
 	"encoding/json"
 	"fmt"
+
 	"github.com/jinzhu/copier"
 )
 
@@ -277,6 +278,25 @@ func (d *DDK) GoodsZsURLGen(sourceURL, pid string) (res *GoodsZsURL, err error) 
 	}
 
 	bytes, err := GetResponseBytes(r, "goods_zs_unit_generate_response")
+	err = json.Unmarshal(bytes, &res)
+	return
+}
+
+type WeappQrcodeUrl struct {
+	Url string `json:"url"`
+}
+
+func (d *DDK) WeappQrcodeUrlGen(p_id string, goods_id int64, otMustparams ...Params) (res *WeappQrcodeUrl, err error) {
+	res = new(WeappQrcodeUrl)
+	params := NewParamsWithType(DDK_WeappQrcodeUrlGen, otMustparams)
+	params.Set("p_id", p_id)
+	params.Set("goods_id_list", fmt.Sprintf("[%d]", goods_id))
+
+	r, err := Call(d.Context, params)
+	if err != nil {
+		return
+	}
+	bytes, err := GetResponseBytes(r, "weapp_qrcode_generate_response")
 	err = json.Unmarshal(bytes, &res)
 	return
 }
