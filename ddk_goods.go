@@ -282,15 +282,17 @@ func (d *DDK) GoodsZsURLGen(sourceURL, pid string) (res *GoodsZsURL, err error) 
 	return
 }
 
-type WeappQrcodeUrl struct {
-	Url string `json:"url"`
+//WeappQrcodeURL 单品推广小程序二维码链接
+type WeappQrcodeURL struct {
+	URL string `json:"url"`
 }
 
-func (d *DDK) WeappQrcodeUrlGen(p_id string, goods_id int64, otMustparams ...Params) (res *WeappQrcodeUrl, err error) {
-	res = new(WeappQrcodeUrl)
-	params := NewParamsWithType(DDK_WeappQrcodeUrlGen, otMustparams)
-	params.Set("p_id", p_id)
-	params.Set("goods_id_list", fmt.Sprintf("[%d]", goods_id))
+//WeappQrcodeURLGen 生成单品推广小程序二维码
+func (d *DDK) WeappQrcodeURLGen(pid string, goodsid int64, otMustparams ...Params) (res *WeappQrcodeURL, err error) {
+	res = new(WeappQrcodeURL)
+	params := NewParamsWithType(DDK_WeappQrcodeUrlGen, otMustparams...)
+	params.Set("p_id", pid)
+	params.Set("goods_id_list", fmt.Sprintf("[%d]", goodsid))
 
 	r, err := Call(d.Context, params)
 	if err != nil {
