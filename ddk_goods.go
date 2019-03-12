@@ -51,9 +51,9 @@ type Goods struct {
 	PromotionRate        int      `json:"promotion_rate"`          // 佣金比例，千分比 300
 	GoodsEvalScore       float32  `json:"goods_eval_score"`        // 商品评价分 4.81
 	GoodsEvalCount       int      `json:"goods_eval_count"`        // 商品评价数量
-	AvgDesc              int      `json:"avg_desc"`                // 描述评分
-	AvgLgst              int      `json:"avg_lgst"`                // 物流评分
-	AvgServ              int      `json:"avg_serv"`                // 服务评分
+	AvgDesc              float32  `json:"avg_desc"`                // 描述评分
+	AvgLgst              float32  `json:"avg_lgst"`                // 物流评分
+	AvgServ              float32  `json:"avg_serv"`                // 服务评分
 	DescPct              float32  `json:"desc_pct"`                // 描述分击败同类店铺百分比
 	LgstPct              float32  `json:"lgst_pct"`                // 物流分击败同类店铺百分比
 	ServPct              float32  `json:"serv_pct"`                // 服务分击败同类店铺百分比
@@ -278,6 +278,26 @@ func (d *DDK) GoodsZsURLGen(sourceURL, pid string) (res *GoodsZsURL, err error) 
 	}
 
 	bytes, err := GetResponseBytes(r, "goods_zs_unit_generate_response")
+	err = json.Unmarshal(bytes, &res)
+	return
+}
+
+// 运营频道商品列表
+type RecommendGoodsListResponse struct {
+	List  []*Goods `json:"list"`
+	Total int64    `json:"total"`
+}
+
+//GoodsRecommend 运营频道商品查询
+func (d *DDK) GoodsRecomend(notMustparams ...Params) (res *RecommendGoodsListResponse, err error) {
+	res = new(RecommendGoodsListResponse)
+	params := NewParamsWithType(DDK_GoodsRecommendGet, notMustparams...)
+
+	r, err := Call(d.Context, params)
+	if err != nil {
+		return
+	}
+	bytes, err := GetResponseBytes(r, "goods_basic_detail_response")
 	err = json.Unmarshal(bytes, &res)
 	return
 }

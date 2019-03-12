@@ -18,6 +18,7 @@ const (
 	DDK_CMSPromUrlGenerate        MethodType = "pdd.ddk.cms.prom.url.generate"
 	DDK_TopGoodsListQuery         MethodType = "pdd.ddk.top.goods.list.query"       //多多客获取爆款排行商品接口
 	DDK_GoodsZsUnitUrlGen         MethodType = "pdd.ddk.goods.zs.unit.url.gen"      //多多进宝转链接口
+	DDK_GoodsRecommendGet         MethodType = "pdd.ddk.goods.recommend.get"        //运营频道商品查询
 	DDK_WeappQrcodeUrlGen         MethodType = "pdd.ddk.oauth.weapp.qrcode.url.gen" //多多客工具生成单品推广小程序二维码
 
 	//商品 API
