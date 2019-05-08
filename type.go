@@ -20,6 +20,7 @@ const (
 	DDK_GoodsZsUnitUrlGen         MethodType = "pdd.ddk.goods.zs.unit.url.gen"      //多多进宝转链接口
 	DDK_GoodsRecommendGet         MethodType = "pdd.ddk.goods.recommend.get"        //运营频道商品查询
 	DDK_WeappQrcodeUrlGen         MethodType = "pdd.ddk.oauth.weapp.qrcode.url.gen" //多多客工具生成单品推广小程序二维码
+	DDK_MerchantListGet           MethodType = "pdd.ddk.merchant.list.get"          //多多客查店铺列表接口
 
 	//商品 API
 	GoodsCatsGet MethodType = "pdd.goods.cats.get" //商品标准类目接口
