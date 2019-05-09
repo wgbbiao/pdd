@@ -59,3 +59,29 @@ func (d *DDK) MallDetail(mallid int, notMustparams ...Params) (res *Mall, err er
 	err = json.Unmarshal(bytes, res)
 	return
 }
+
+//MallCouponGenerateURLResponse MallCouponGenerateURLResponse
+type MallCouponGenerateURLResponse struct {
+	URL                  string `json:"url"`
+	ShortURL             string `json:"short_url"`
+	MobileURL            string `json:"mobile_url"`
+	MobileShortURL       string `json:"mobile_short_url"`
+	WeAppWebViewURL      string `json:"we_app_web_view_url"`
+	WeAppWebViewShortURL string `json:"we_app_web_view_short_url"`
+}
+
+//MallURLGen 多多客生成店铺推广链接API
+func (d *DDK) MallURLGen(mallid int64, pid string, notMustparams ...Params) (res *MallCouponGenerateURLResponse, err error) {
+	res = new(MallCouponGenerateURLResponse)
+	params := NewParamsWithType(DDK_MallUrlGen, notMustparams...)
+	params.Set("mall_id", mallid)
+	params.Set("pid", pid)
+
+	r, err := Call(d.Context, params)
+	if err != nil {
+		return
+	}
+	bytes, err := GetResponseArrayIndexBytes(r, 0, "mall_coupon_generate_url_response", "list")
+	err = json.Unmarshal(bytes, res)
+	return
+}
