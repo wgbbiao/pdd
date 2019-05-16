@@ -1,11 +1,12 @@
 package pdd
 
 import (
-	"github.com/parnurzeal/gorequest"
-	"sync"
+	"encoding/json"
 	"fmt"
 	"log"
-	"encoding/json"
+	"sync"
+
+	"github.com/parnurzeal/gorequest"
 )
 
 const EndPoint = "https://gw-api.pinduoduo.com/api/router"
@@ -27,7 +28,7 @@ func Post(context *Context, query string) (b []byte, err error) {
 		for times < context.RetryTimes {
 			b, err = post(query)
 			if err != nil {
-				log.Printf("第 %d 次重试失败：%s", times + 1, err)
+				log.Printf("第 %d 次重试失败：%s", times+1, err)
 			} else {
 				return
 			}
@@ -45,12 +46,12 @@ func post(query string) (b []byte, err error) {
 		EndBytes()
 	// push back
 	clients.Put(client)
+	if err = getErrorsError(errors); err != nil {
+		return
+	}
 	if IsBadPddRequest(b) {
 		err = new(Error)
 		json.Unmarshal(b, err)
-		return
-	}
-	if err = getErrorsError(errors); err != nil {
 		return
 	}
 	return
