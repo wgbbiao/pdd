@@ -1,13 +1,15 @@
 package pdd
 
 import (
-	"testing"
 	"fmt"
+	"testing"
 )
 
 func TestGoodsAPI_GoodsCatGet(t *testing.T) {
+	ClientID := "d"
+	ClientSecret := "sdf"
 	g := newGoodsAPIWithContext(&Context{
-		ClientId: ClientId,
+		ClientId:     ClientID,
 		ClientSecret: ClientSecret,
 	})
 	r, err := g.GoodsCatGet(0)
