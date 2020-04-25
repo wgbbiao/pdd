@@ -59,6 +59,47 @@ type Goods struct {
 	ServPct              float32  `json:"serv_pct"`                // 服务分击败同类店铺百分比
 }
 
+type RecommendGoods struct {
+	CreateAt             int      `json:"create_at"`               // 创建时间
+	GoodsId              int      `json:"goods_id"`                // 商品id
+	GoodsName            string   `json:"goods_name"`              // 商品名称
+	GoodsDesc            string   `json:"goods_desc"`              // 商品描述
+	GoodsThumbnailUrl    string   `json:"goods_thumbnail_url"`     // 商品缩略图
+	GoodsImageUrl        string   `json:"goods_image_url"`         // 商品主图
+	GoodsGalleryUrls     []string `json:"goods_gallery_urls"`      // 商品轮播图
+	SalesTip             string   `json:"sales_tip"`               // 已售卖件数
+	MinGroupPrice        int      `json:"min_group_price"`         // 最小拼团价（单位为分） 最低价 sku 的拼团价，单位为分
+	MinNormalPrice       int      `json:"min_normal_price"`        // 最小单买价格（单位为分）
+	MallId               int      `json:"mall_id"`                 // 店铺 id
+	MallName             string   `json:"mall_name"`               // 店铺名字
+	MerchantType         string   `json:"merchant_type"`           // 店铺类型，1-个人，2-企业，3-旗舰店，4-专卖店，5-专营店，6-普通店
+	MallCps              int      `json:"mall_cps"`                // 该商品所在店铺是否参与全店推广，0：否，1：是
+	MallRate             int      `json:"mall_rate"`               // 全店推广佣金比率？ 千分比
+	CategoryId           int      `json:"category_id"`             // 商品类目 id
+	CategoryName         string   `json:"category_name"`           // 商品类目名称
+	OptId                string   `json:"opt_id"`                  // 商品标签 id，使用 pdd.goods.opts.get 接口获取
+	OptName              string   `json:"opt_name"`                // 商品标签名
+	OptIds               []int    `json:"opt_ids"`                 // 商品标签id
+	CatIds               []int    `json:"cat_ids"`                 // 商品类目 id 列表
+	CatId                int      `json:"cat_id"`                  // 可能为 null
+	HasCoupon            bool     `json:"has_coupon"`              // 是否有优惠券
+	CouponMinOrderAmount int      `json:"coupon_min_order_amount"` // 优惠券门槛价格，单位为分
+	CouponDiscount       int      `json:"coupon_discount"`         // 优惠券面额，单位为分
+	CouponTotalQuantity  int      `json:"coupon_total_quantity"`   // 优惠券总数量
+	CouponRemainQuantity int      `json:"coupon_remain_quantity"`  // 优惠券剩余数量
+	CouponStartTime      int      `json:"coupon_start_time"`       // 优惠券生效时间，UNIX时间戳
+	CouponEndTime        int      `json:"coupon_end_time"`         // 优惠券失效时间，UNIX时间戳
+	PromotionRate        int      `json:"promotion_rate"`          // 佣金比例，千分比 300
+	GoodsEvalScore       float32  `json:"goods_eval_score"`        // 商品评价分 4.81
+	GoodsEvalCount       int      `json:"goods_eval_count"`        // 商品评价数量
+	AvgDesc              float32  `json:"avg_desc"`                // 描述评分
+	AvgLgst              float32  `json:"avg_lgst"`                // 物流评分
+	AvgServ              float32  `json:"avg_serv"`                // 服务评分
+	DescPct              float32  `json:"desc_pct"`                // 描述分击败同类店铺百分比
+	LgstPct              float32  `json:"lgst_pct"`                // 物流分击败同类店铺百分比
+	ServPct              float32  `json:"serv_pct"`                // 服务分击败同类店铺百分比
+}
+
 func (g *Goods) MarshalGoodsGalleryUrls() string {
 	r, _ := json.Marshal(g.GoodsGalleryUrls)
 	return string(r)
@@ -88,7 +129,7 @@ type GoodsModel struct {
 	MinNormalPrice       int     `json:"min_normal_price"`
 	MallId               int     `json:"mall_id"`
 	MallName             string  `json:"mall_name"`
-	MerchantType         int     `json:"merchant_type"`
+	MerchantType         string  `json:"merchant_type"`
 	MallCps              int     `json:"mall_cps"`
 	CategoryId           int     `json:"category_id"`
 	CategoryName         string  `json:"category_name"`
@@ -296,8 +337,8 @@ func (d *DDK) GoodsZsURLGen(sourceURL, pid string) (res *GoodsZsURL, err error) 
 
 // 运营频道商品列表
 type RecommendGoodsListResponse struct {
-	List  []*Goods `json:"list"`
-	Total int64    `json:"total"`
+	List  []*RecommendGoods `json:"list"`
+	Total int64             `json:"total"`
 }
 
 //GoodsRecommend 运营频道商品查询
